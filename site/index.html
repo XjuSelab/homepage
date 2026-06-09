@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XjuSelab · 软件开发实验室</title>
+<meta name="description" content="新疆大学软件开发实验室——以工程的严谨沉淀研究，用开源的方式连接下一届。" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-subtle: #f7f6f3;
+    --bg-hover: #f1f1ef;
+    --text: #37352f;
+    --muted: #787774;
+    --faint: #9b9a97;
+    --border: #edece9;
+    --line-strong: #dcdad4;
+    --link: #2383e2;
+    --c-feiyue: #0b6e99;
+    --c-flux: #0f7b6c;
+    --c-import: #d9730d;
+    --c-solver: #9065b0;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --serif: "Source Serif 4", Georgia, "Songti SC", serif;
+    --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Top bar ===== */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 9px; color: var(--text); font-weight: 500; }
+  .topbar .brand svg { width: 18px; height: 18px; }
+  .topbar a { color: var(--muted); text-decoration: none; transition: color .15s; }
+  .topbar a:hover { color: var(--text); }
+
+  hr.rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ===== Hero ===== */
+  .hero { padding: 72px 0 56px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: .08em;
+    color: var(--c-feiyue);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .hero .sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 21px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .hero .mission {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text);
+    border-left: 2px solid var(--line-strong);
+    padding-left: 18px;
+    margin-bottom: 26px;
+    max-width: 600px;
+  }
+  .hero .intro {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 620px;
+  }
+  .hero .meta {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+  }
+
+  /* ===== Section ===== */
+  section { padding: 48px 0; }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .sec-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 25px;
+    letter-spacing: -0.01em;
+  }
+  .sec-head .en {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  /* ===== Cards ===== */
+  .card {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px 22px 26px;
+    margin-bottom: 16px;
+    background: var(--bg);
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent, var(--line-strong));
+  }
+  .card:hover {
+    border-color: var(--line-strong);
+    box-shadow: 0 6px 22px rgba(15, 15, 15, 0.05);
+    transform: translateY(-2px);
+  }
+  .card-top { display: flex; align-items: flex-start; gap: 14px; }
+  .card-icon {
+    flex: none;
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--accent);
+  }
+  .card-icon svg { width: 21px; height: 21px; }
+  .card-body { flex: 1; min-width: 0; }
+  .card-title {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 9px;
+    font-size: 17px; font-weight: 600; color: var(--text);
+    margin-bottom: 5px;
+  }
+  .ver {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .lang {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .card-desc { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+
+  /* install row */
+  .install {
+    margin-top: 16px;
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .url {
+    flex: 1 1 280px;
+    min-width: 0;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text);
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 11px;
+    overflow: hidden;
+  }
+  .url code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .copy {
+    flex: none;
+    border: none; background: transparent; cursor: pointer;
+    color: var(--faint); padding: 2px; display: grid; place-items: center;
+    transition: color .15s;
+  }
+  .copy:hover { color: var(--text); }
+  .copy svg { width: 15px; height: 15px; }
+
+  .btns { display: flex; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13.5px; font-weight: 500;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    transition: background .15s, border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .btn svg { width: 15px; height: 15px; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover { filter: brightness(1.07); }
+  .btn-ghost {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--bg-hover); border-color: var(--line-strong); }
+
+  .links-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+  .hint {
+    font-size: 12.5px; color: var(--faint);
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .hint a { color: var(--link); text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+
+  /* ===== Footer ===== */
+  footer {
+    padding: 44px 0 60px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+  footer .fl { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  ::selection { background: rgba(35, 131, 226, 0.16); }
+
+  @media (max-width: 560px) {
+    .hero { padding: 48px 0 40px; }
+    .hero h1 { font-size: 40px; }
+    .hero .sub { font-size: 18px; }
+    .btns, .install { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="brand">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="4" width="20" height="24" rx="2"/><line x1="6" y1="10" x2="26" y2="10"/><line x1="11" y1="4" x2="11" y2="28"/><line x1="15" y1="16" x2="22" y2="16"/><line x1="15" y1="20" x2="22" y2="20"/>
+      </svg>
+      XjuSelab
+    </span>
+    <a href="https://github.com/XjuSelab" target="_blank" rel="noopener">github.com/XjuSelab ↗</a>
+  </div>
+  <hr class="rule" />
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="eyebrow">新疆大学 · Xinjiang University</div>
+    <h1>软件开发实验室</h1>
+    <div class="sub">Software Engineering Lab</div>
+    <p class="mission">以工程的严谨沉淀研究，用开源的方式连接下一届。</p>
+    <p class="intro">我们是一支由学生驱动的技术团队，专注于全栈开发、工具链与工程实践——把做过的项目、写过的脚本，沉淀为可复用、可持续协作的开放资产。</p>
+    <div class="meta">
+      <span class="pill">Full-Stack</span>
+      <span class="pill">DevTools</span>
+      <span class="pill">Open Source</span>
+      <span class="pill">Student-Driven</span>
+    </div>
+  </header>
+
+  <!-- Projects -->
+  <section>
+    <div class="sec-head"><h2>项目</h2><span class="en">Projects</span></div>
+
+    <article class="card" style="--accent: var(--c-feiyue);">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">飞跃手册 <span class="lang">TypeScript · React · FastAPI</span></div>
+          <p class="card-desc">面向新疆大学在校生与校友的开放知识库与飞跃笔记站——笔记、课程资料库、CCF 截稿追踪、教务学分统计，一站沉淀踩过的坑与走通的路。</p>
+          <div class="links-row">
+            <a class="btn btn-primary" href="https://feiyue.selab.top" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              访问
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/XjuSelab/xju-feiyue" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+              源码
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" style="--accent: var(--c-flux);">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">FluxEnv <span class="lang">Shell</span></div>
+          <p class="card-desc">一个优雅的 Ubuntu 环境初始化方案——一键集成 Vim、Zsh、Starship，开箱即用的趁手开发环境，新机器三分钟进入状态。</p>
+          <div class="links-row">
+            <a class="btn btn-primary" href="https://github.com/XjuSelab/FluxEnv" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+              源码
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Userscripts -->
+  <section>
+    <div class="sec-head"><h2>脚本猫脚本</h2><span class="en">Userscripts</span></div>
+
+    <article class="card" style="--accent: var(--c-import);">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">飞跃 · 成绩单一键导入 <span class="ver">v1.5.1</span></div>
+          <p class="card-desc">在新疆大学教务系统成绩页加「导入飞跃」悬浮按钮，一键导出成绩单并回传飞跃学分统计，自动出结果。全程用你自己已登录的教务会话，不碰密码。</p>
+          <div class="install">
+            <div class="url"><code>https://feiyue.selab.top/import.user.js</code>
+              <button class="copy" data-copy="https://feiyue.selab.top/import.user.js" title="复制">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div class="btns">
+              <a class="btn btn-primary" href="https://feiyue.selab.top/import.user.js">安装</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" style="--accent: var(--c-solver);">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/><path d="M5 15l.6 1.5L7 17l-1.4.5L5 19l-.6-1.5L3 17l1.4-.5z"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">CourseGrading AI 解题助手 <span class="ver">v2.1.8</span></div>
+          <p class="card-desc">希冀（CourseGrading / educg）编程题平台：提取题目 → DeepSeek 生成 → 自动提交 → 轮询判题结果，支持一键串行开刷所有作业、失败读样例多版本重试、自动跳题。</p>
+          <div class="install">
+            <div class="url"><code>https://feiyue.selab.top/cg-ai-solver.user.js?v=218</code>
+              <button class="copy" data-copy="https://feiyue.selab.top/cg-ai-solver.user.js?v=218" title="复制">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div class="btns">
+              <a class="btn btn-primary" href="https://feiyue.selab.top/cg-ai-solver.user.js?v=218">安装</a>
+              <a class="btn btn-ghost" href="https://github.com/XjuSelab/xiji" target="_blank" rel="noopener">源码</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <p class="hint">用户脚本需先安装 <a href="https://scriptcat.org/" target="_blank" rel="noopener">脚本猫</a> 或 Tampermonkey 浏览器扩展，再点「安装」即可识别。</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2026 XjuSelab · 新疆大学软件开发实验室</span>
+    <span class="fl">
+      <a href="https://github.com/XjuSelab" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://feiyue.selab.top" target="_blank" rel="noopener">飞跃手册</a>
+    </span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      navigator.clipboard.writeText(text).then(function () {
+        var svg = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.color = '#0f7b6c';
+        setTimeout(function () { btn.innerHTML = svg; btn.style.color = ''; }, 1400);
+      });
+    });
+  });
+</script>
+</body>
+</html>
