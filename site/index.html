@@ -29,12 +29,12 @@
     --radius-lg: 12px;
     --serif: "Source Serif 4", Georgia, "Songti SC", serif;
     --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", "Consolas", "PingFang SC", "Microsoft YaHei", monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 
   body {
     font-family: var(--sans);
@@ -70,12 +70,17 @@
   /* ===== Hero ===== */
   .hero { padding: 72px 0 56px; }
   .eyebrow {
-    font-family: var(--mono);
+    font-family: var(--sans);
+    font-weight: 500;
     font-size: 12.5px;
-    letter-spacing: .08em;
+    letter-spacing: .06em;
     color: var(--c-feiyue);
-    text-transform: uppercase;
     margin-bottom: 20px;
+  }
+  .eyebrow .en {
+    font-family: var(--mono);
+    font-weight: 400;
+    text-transform: uppercase;
   }
   .hero h1 {
     font-family: var(--serif);
@@ -212,7 +217,8 @@
     min-width: 0;
     display: flex; align-items: center; gap: 8px;
     font-family: var(--mono);
-    font-size: 12.5px;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--text);
     background: var(--bg-subtle);
     border: 1px solid var(--border);
@@ -318,7 +324,7 @@
 
   <!-- Hero -->
   <header class="hero">
-    <div class="eyebrow">新疆大学 · Xinjiang University</div>
+    <div class="eyebrow">新疆大学 · <span class="en">Xinjiang University</span></div>
     <h1>软件开发实验室</h1>
     <div class="sub">Software Engineering Lab</div>
     <p class="mission">以工程的严谨沉淀研究，用开源的方式连接下一届。</p>
